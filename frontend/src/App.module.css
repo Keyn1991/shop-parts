@@ -1,0 +1,107 @@
+/* src/App.module.css */
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #22252A; /* <<< DODANE: Ciemne tło dla całego kontenera aplikacji */
+    color: #f0f0f0; /* <<< DODANE: Domyślny jasny kolor tekstu dla ciemnego tła */
+}
+
+.header {
+    background-color: #2D3035; /* Ciemniejsze tło dla nagłówka, pasujące do ciemnego motywu */
+    /* var(--surface-color) byłby biały, co może nie pasować do ciemnego tła appContainer */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25); /* Mocniejszy cień na ciemnym tle */
+    border-bottom: 1px solid #4A4E54; /* Ciemniejsza linia */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FFD700; /* Logo w kolorze akcentu, np. żółtym, aby było widoczne */
+    text-decoration: none;
+}
+.logo:hover {
+    color: #e6c300; /* Ciemniejszy żółty */
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navLink {
+    color: #e0e0e0; /* Jaśniejszy tekst dla linków nawigacyjnych na ciemnym tle */
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    border: 1px solid transparent;
+}
+
+/* Aktywny link lub hover dla ciemnego motywu */
+.navLink:hover,
+.navLink[aria-current="page"] {
+    background-color: #FFD700; /* Żółty akcent dla aktywnego/hover */
+    color: #22252A !important; /* Ciemny tekst na żółtym tle */
+    border-color: #FFD700;
+}
+
+.logoutButton {
+    background-color: transparent;
+    border: 1px solid #FFD700; /* Żółta ramka */
+    color: #FFD700 !important; /* Żółty tekst */
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    background-color: #FFD700;
+    color: #22252A !important; /* Ciemny tekst na żółtym tle */
+}
+
+.mainContent {
+    flex-grow: 1;
+
+    max-width: 1400px;
+    width: 100%;
+    margin: 20px auto; /* Dodany margines górny/dolny dla .mainContent */
+    background-color: var(--surface-color); /* <<< DODANE: Jasne tło dla obszaru treści (np. białe) */
+    color: var(--text-color); /* <<< DODANE: Ciemny tekst dla obszaru treści */
+    border-radius: var(--border-radius); /* Zaokrąglenie rogów dla obszaru treści */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Delikatny cień dla obszaru treści */
+}
+
+.adminLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.pageTitle {
+    font-size: 2rem;
+    /* Kolor tytułu strony w .mainContent może pozostać domyślny (var(--text-color))
+       lub być specyficzny, np. var(--primary-color) jeśli kontrast jest dobry */
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--secondary-color);
+    text-align: center;
+}
+
+.footer {
+    background-color: #2D3035; /* Ciemniejsze tło dla stopki */
+    color: #bdc3c7; /* Jaśniejszy szary tekst w stopce */
+    text-align: center;
+    padding: 25px 20px;
+    /* margin-top: auto; - nie jest już tak kluczowe, bo .appContainer jest flex */
+    font-size: 0.9rem;
+    border-top: 1px solid #4A4E54; /* Ciemniejsza linia górna */
+}

@@ -1,0 +1,98 @@
+/* src/components/styles/PartsList.module.css */
+.partsListContainer {
+    padding: 20px 0; /* Mniej paddingu, jeśli App.tsx ma już swój */
+}
+
+.listTitle {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.partsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.partCard {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.partCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.partName {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    min-height: 2.6rem; /* Aby wyrównać wysokość nagłówków w kartach */
+}
+
+.partDescription {
+    font-size: 0.9rem;
+    color: var(--text-light-color);
+    margin-bottom: 15px;
+    flex-grow: 1; /* Opis zajmuje dostępną przestrzeń, wypychając szczegóły i akcje na dół */
+    min-height: 40px; /* Minimalna wysokość dla opisu */
+}
+
+.partDetails {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.partDetails p {
+    margin-bottom: 5px;
+}
+
+.partPrice span {
+    font-weight: bold;
+    color: var(--success-color); /* Zielony dla ceny */
+}
+
+.partStockAvailable span {
+    font-weight: bold;
+    color: var(--success-color);
+}
+
+.partStockUnavailable span {
+    font-weight: bold;
+    color: var(--error-color);
+}
+
+.cardActions {
+    display: flex;
+    gap: 10px; /* Odstęp między przyciskami */
+    margin-top: auto; /* Przyciski na dole karty */
+}
+
+.cardActions button {
+    flex-grow: 1; /* Przyciski zajmują całą szerokość */
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+.editButton {
+    background-color: var(--accent-color); /* Opcjonalny kolor akcentu */
+    color: var(--text-color); /* Lub biały, jeśli akcent jest ciemny */
+}
+.editButton:hover {
+    background-color: #e0ac00; /* Ciemniejszy odcień akcentu */
+}
+
+.errorText {
+    /* Dodatkowe style, jeśli potrzebne */
+    text-align: center;
+}
