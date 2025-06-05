@@ -1,4 +1,4 @@
-// src/users/users.module.ts
+// Plik: backend/src/users/users.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
@@ -9,9 +9,9 @@ import { User } from './user.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    // JwtModule.register({ secret: 'secretKey', signOptions: { expiresIn: '1h' } }), // <<< USUNIĘTA LOKALNA KONFIGURACJA
+    // JwtModule.register({ secret: 'secretKey', ... }) // <<< USUNIĘTA LOKALNA KONFIGURACJA
   ],
-  providers: [UsersService], // JwtService będzie dostępny globalnie
+  providers: [UsersService],
   controllers: [UsersController],
   exports: [UsersService],
 })

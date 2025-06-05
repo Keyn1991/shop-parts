@@ -10,7 +10,10 @@ export class AppController {
 
   @Get()
   @ApiOperation({ summary: 'Sprawdź status API i pobierz powitalną wiadomość' })
-  @ApiResponse({ status: 200, description: 'API działa poprawnie i zwraca wiadomość powitalną.' })
+  @ApiResponse({
+    status: 200,
+    description: 'API działa poprawnie i zwraca wiadomość powitalną.',
+  })
   getHello(): string {
     return this.appService.getHello(); // Wywołanie metody z serwisu
   }

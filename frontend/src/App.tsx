@@ -1,14 +1,14 @@
 // src/App.tsx
 import React, {useEffect, useState, useCallback, JSX} from "react"; // Dodano useCallback
 import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from "react-router-dom"; // Dodano useLocation
-import { Login } from "./components/Login";
-import { Register } from "./components/Register"; // <<< NOWY IMPORT
+import { Login } from "./components/Login/Login.tsx";
+import { Register } from "./components/Register/Register.tsx"; // <<< NOWY IMPORT
 import { PartForm } from "./components/PartForm";
 
 import styles from "./App.module.css";
-import { getRole, logout, isAuthenticated } from "./services/authService";
+import { getRole, logout, isAuthenticated } from "./services";
 import { User, Part } from "./types";
-import {PartsList} from "./components/PartList.tsx";
+import {PartsList} from "./components/PartList";
 
 // Komponent pomocniczy dla chronionych ścieżek
 interface ProtectedRouteProps {

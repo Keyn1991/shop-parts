@@ -1,22 +1,20 @@
-// src/services/authService.ts
+
 import axios from 'axios';
-import { BASE_API_URL } from '../config/apiConfig';
-import { User } from '../types.tsx'; // Załóżmy, że User też tam jest
+import { BASE_API_URL } from '../config';
+import { User } from '../types.tsx';
 
-const AUTH_API_BASE = `${BASE_API_URL}/users`; // Lub np. /auth
+const AUTH_API_BASE = `${BASE_API_URL}/users`;
 
-interface LoginResponse extends User { // Zakładamy, że backend zwraca pełny obiekt User + token
+interface LoginResponse extends User {
     token: string;
 }
 
 interface RegisterPayload {
     username: string;
     password: string;
-    // celowo nie wysyłamy roli z publicznego formularza
 }
 
-// Interfejs dla odpowiedzi z backendu po rejestracji (bez hasła)
-interface RegisterResponse extends Omit<User, 'password'> {}
+type RegisterResponse = Omit<User, 'password'>
 
 
 export const login = async (username: string, password: string): Promise<LoginResponse> => {

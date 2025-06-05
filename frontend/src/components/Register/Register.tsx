@@ -1,8 +1,8 @@
 // src/components/Register.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../services/authService";
-import styles from "./AuthForm.module.css"; // <<< UŻYJ TYCH SAMYCH STYLÓW CO LOGIN
+import { register } from "../../services";
+import styles from "../styles/AuthForm.module.css"; // <<< UŻYJ TYCH SAMYCH STYLÓW CO LOGIN
 
 export const Register: React.FC = () => {
     const [username, setUsername] = useState("");
@@ -99,7 +99,7 @@ export const Register: React.FC = () => {
                         </button>
                     </form>
                     <p className={styles.link}>
-                        Masz już konto? <a href="/login">Zaloguj się</a>
+                        Masz już konto? <a href="/Login/Login">Zaloguj się</a>
                     </p>
                 </div>
             </div>

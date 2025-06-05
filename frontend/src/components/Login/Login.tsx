@@ -1,9 +1,9 @@
 // src/components/Login.tsx
 import React, { useState } from "react";
-import { login } from "../services/authService";
+import { login } from "../../services";
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthForm.module.css";
-import { User } from "../types";
+import styles from "../styles/AuthForm.module.css";
+import { User } from "../../types.tsx";
 
 interface LoginProps {
     onLoginSuccess: (role: User['role']) => void;

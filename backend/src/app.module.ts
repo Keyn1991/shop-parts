@@ -1,4 +1,4 @@
-// src/app.module.ts
+// Plik: backend/src/app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -7,22 +7,23 @@ import { PartsModule } from './parts/parts.module';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+// import { AuthMiddleware } from './auth/auth.guard.ts'; // Zmień nazwę i sposób użycia jeśli to Guard
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Ustawia ConfigModule jako globalny
-      envFilePath: '.env', // Można jawnie wskazać (Nest sam też szuka)
-      ignoreEnvFile: process.env.NODE_ENV === 'production', // Na produkcji zmienne będą z systemu/Dockera
+      isGlobal: true,
+      envFilePath: '.env', // Wskazuje na backend/.env gdy uruchamiasz lokalnie bez Dockera
+      // Dla Dockera, zmienne są wstrzykiwane przez docker-compose i ConfigService je odczyta
     }),
     DatabaseModule,
     PartsModule,
     UsersModule, // UsersModule nie powinien już importować JwtModule.register
     JwtModule.registerAsync({
-      global: true, // Ustawia JwtModule jako globalny
-      imports: [ConfigModule], // Potrzebne dla useFactory
+      global: true,
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
           expiresIn: configService.get<string>('JWT_EXPIRES_IN', '1h'),
@@ -34,3 +35,5 @@ import { AppService } from './app.service';
   providers: [AppService],
 })
 export class AppModule {}
+// Jeśli AuthMiddleware to faktycznie Guard, powinien być zarejestrowany globalnie lub w modułach
+// np. providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }] (AuthGuard musi być zdefiniowany)

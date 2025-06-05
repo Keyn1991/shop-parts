@@ -1,6 +1,5 @@
-# docker-compose.yml
+# F:/PROJEKT SHOPPARTS/docker-compose.yml
 services:
-  # Serwis Backendu
   backend:
     build:
       context: ./backend
@@ -8,23 +7,21 @@ services:
     container_name: parts-shop-backend
     restart: unless-stopped
     ports:
-      # Mapuje port zdefiniowany w zmiennej ${PORT} (lub domyślnie 3000 z .env) na hoście
-      # na port 3000 WEWNĄTRZ kontenera (na którym nasłuchuje NestJS)
-      - "${PORT:-3000}:3000" # <<< POPRAWKA I WYJAŚNIENIE
+      - "${PORT:-3000}:${PORT:-3000}"
     environment:
-      - NODE_ENV=${NODE_ENV:-production} # Domyślnie production jeśli nie ma w .env
-      - PORT=${PORT:-3000} # Port WEWNĄTRZ kontenera, na którym NestJS nasłuchuje
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT:-3000}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
-      - TYPEORM_SYNCHRONIZE=${TYPEORM_SYNCHRONIZE:-false} # Domyślnie false
+      - TYPEORM_SYNCHRONIZE=${TYPEORM_SYNCHRONIZE:-false}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
-      - FRONTEND_URL=${FRONTEND_URL} # Dla CORS
-      - SWAGGER_API_DOCS_PATH=${SWAGGER_API_DOCS_PATH} # Dla Swaggera
-      # Możesz dodać też inne zmienne SWAGGER_ jeśli chcesz
+      - FRONTEND_URL=${FRONTEND_URL}
+      - SWAGGER_API_DOCS_PATH=${SWAGGER_API_DOCS_PATH}
+      # Opcjonalne zmienne dla Swaggera z main.ts
       # - SWAGGER_API_TITLE=${SWAGGER_API_TITLE}
       # - SWAGGER_API_DESC=${SWAGGER_API_DESC}
       # - SWAGGER_API_VERSION=${SWAGGER_API_VERSION}
@@ -33,11 +30,14 @@ services:
     networks:
       - app-network
 
-  # Serwis Frontendu
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args: # <<< DODANE: Przekazywanie argumentów do budowania obrazu frontendu
+        # VITE_API_URL: http://localhost:3000 # Dla testów lokalnych, jeśli backend jest na tym porcie
+        # Lub odczytaj z .env:
+        VITE_API_URL: ${VITE_API_URL_FOR_COMPOSE:-http://localhost:3000}
     container_name: parts-shop-frontend
     restart: unless-stopped
     ports:
@@ -46,14 +46,7 @@ services:
       - backend
     networks:
       - app-network
-    # Jeśli BASE_API_URL frontendu ma być konfigurowalny w czasie budowania:
-    # build:
-    #   context: ./frontend
-    #   dockerfile: Dockerfile
-    #   args:
-    #     VITE_API_URL: ${VITE_API_URL:-http://localhost:3000} # Odczytaj z .env lub użyj domyślnego
 
-  # Serwis Bazy Danych (MySQL)
   db:
     image: mysql:8.0
     container_name: parts-shop-db

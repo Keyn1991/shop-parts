@@ -1,24 +1,18 @@
-# Etap 1: Budowanie aplikacji React
 FROM node:20-slim AS builder
 
 WORKDIR /app
 
-# Kopiuj package.json i package-lock.json (lub yarn.lock)
 COPY package*.json ./
-# COPY yarn.lock ./ # Jeśli używasz yarn
+# COPY yarn.lock ./
+RUN npm install # Lub npm ci --ignore-scripts
+# RUN yarn install --frozen-lockfile
 
-# Instaluj zależności
-RUN npm install
-# RUN yarn install # Jeśli używasz yarn
-
-# Kopiuj resztę kodu aplikacji
 COPY . .
 
-# Buduj aplikację produkcyjną
-# Pamiętaj, aby skonfigurować BASE_API_URL dla frontendu (np. przez zmienne środowiskowe Vite)
-# Jeśli API będzie pod adresem np. /api na tej samej domenie co frontend,
-# to BASE_API_URL może być relatywne.
-# Jeśli backend będzie na innej domenie/porcie, frontend musi o tym wiedzieć.
+# Przekazywanie VITE_API_URL jako argumentu budowania
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
 RUN npm run build
 
 # Etap 2: Serwowanie aplikacji za pomocą Nginx
@@ -27,13 +21,11 @@ FROM nginx:stable-alpine
 # Usuń domyślną konfigurację Nginx
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Kopiuj niestandardową konfigurację Nginx (stworzymy ją poniżej)
+# Kopiuj niestandardową konfigurację Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Kopiuj zbudowane pliki statyczne z etapu 'builder' do folderu serwowanego przez Nginx
+# Kopiuj zbudowane pliki statyczne
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Odsłoń port, na którym Nginx będzie nasłuchiwał
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

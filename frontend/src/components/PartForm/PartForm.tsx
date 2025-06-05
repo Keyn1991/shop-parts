@@ -1,8 +1,8 @@
 // src/components/PartForm.tsx
 import React, { useState, useEffect } from "react";
-import { addPart, updatePart } from "../services/partsService";
-import { Part } from "../types";
-import styles from "./PartForm.module.css";
+import { addPart, updatePart } from "../../services";
+import { Part } from "../../types.tsx";
+import styles from "../styles/PartForm.module.css";
 
 interface PartFormProps {
     onFormSubmit: () => void; // Callback po pomyślnym dodaniu/aktualizacji
